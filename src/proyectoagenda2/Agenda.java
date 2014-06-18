@@ -68,6 +68,12 @@ public class Agenda
         return true;
     }
     
+    /**
+     * Pasándole un id y un contacto, borra dicho contacto
+     * @param contacto
+     * @param id
+     * @return 
+     */
     public boolean borrarContacto(Personas contacto,String id)
     {
         try
@@ -156,6 +162,11 @@ public class Agenda
         }
     }
     
+    /**
+     * Pasamos un objeto tipo usuario para crear un nuevo usuario
+     * @param u
+     * @return 
+     */
     public boolean crearUsuario(Usuarios u)
     {
         //guardamos el usuario y la contraseña en la tabla usuarios
@@ -211,10 +222,7 @@ public class Agenda
         {
             Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-          
-        
-        
+      
         return true;
     }
 }
