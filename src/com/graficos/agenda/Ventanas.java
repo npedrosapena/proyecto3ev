@@ -37,7 +37,7 @@ public class Ventanas extends JFrame
     BaseDatos bd= new BaseDatos();
     DefaultTableModel modelo;
     public String identificador;
-    String correoReceptor;
+    //String correoReceptor;
     
     final JTable tablaDatos= new JTable();
     
@@ -70,6 +70,7 @@ public class Ventanas extends JFrame
         marcoLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         marcoLogin.setSize(450,150);
         marcoLogin.setLocationRelativeTo(null);
+        marcoLogin.setResizable(false);
         
         //nombre
         lblNombreUsuario= new JLabel("Nombre: ");
@@ -236,7 +237,7 @@ public class Ventanas extends JFrame
         marcoCrearUsuario.setSize(440,250);
         marcoCrearUsuario.setLocationRelativeTo(null);
         marcoCrearUsuario.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+        marcoCrearUsuario.setResizable(false);
         
         
         lblNombreUsuario= new JLabel("Nombre Usuario: ");
@@ -560,14 +561,14 @@ public class Ventanas extends JFrame
                 
                 System.out.println(table.getSelectedRow() + " : " + table.getSelectedColumn());
                 
-                 correoReceptor=table.getModel().getValueAt(table.getSelectedRow(), 8).toString();
+                String correoReceptor=table.getModel().getValueAt(table.getSelectedRow(), 8).toString();
                 String v=table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
                 
                    System.out.println("correo: "+correoReceptor);
                    System.out.println("id: "+v);
                    
                    
-                    Hilos hilo= new Hilos(correoReceptor,obtenerCorreoUsuario(identificador));
+                    Hilos hilo= new Hilos(correoReceptor,ag.obtenerCorreoUsuario(identificador));
                     hilo.currentThread();
                     hilo.start();
                     System.out.println("estado hilo: "+hilo.getState());
@@ -584,7 +585,13 @@ public class Ventanas extends JFrame
         tablaDatos.setComponentPopupMenu(popupMenu);//añado el popup a la tabla
         //fin menu boton derecho
         
-        tablaDatos.setModel(this.cargaDatos(idUsuario));
+        try
+        {
+            tablaDatos.setModel(this.cargaDatos(idUsuario));
+        }catch(Exception ex)
+        {
+            System.out.println("error: "+ex.getMessage());
+        }
         
         JScrollPane scrollTabla= new JScrollPane(tablaDatos);
         scrollTabla.setBounds(10, 10, 620, 300);
@@ -594,6 +601,7 @@ public class Ventanas extends JFrame
         ventanaAgendaUsuario.setSize(640, 480);
         ventanaAgendaUsuario.setLocationRelativeTo(null);
         ventanaAgendaUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaAgendaUsuario.setResizable(false);
         
         btnSalir= new JButton("Salir");
         btnSalir.setBounds(10, 400, 80, 20);
@@ -780,7 +788,7 @@ public class Ventanas extends JFrame
             System.out.println("codigo error: "+ex.getErrorCode());
             if(ex.getErrorCode()==0)
             {
-                JOptionPane.showMessageDialog(null, "Error!! no existen contactos por ese criterio de búsqueda", "Error!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error!! no hay contactos que mostrar", "Error!", JOptionPane.ERROR_MESSAGE);
             }else
             {
                 JOptionPane.showMessageDialog(null, "Error!!"+ex.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
@@ -831,6 +839,7 @@ public class Ventanas extends JFrame
         marcoCrearContacto.setSize(440,230);
         marcoCrearContacto.setLocationRelativeTo(null);
         marcoCrearContacto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        marcoCrearContacto.setResizable(false);
         
         lblNombreUsuario= new JLabel("Nombre contacto: ");
         lblNombreUsuario.setBounds(10, 10, 145, 20);
@@ -1092,6 +1101,7 @@ public class Ventanas extends JFrame
         marcoModificarContacto.setSize(440,220);
         marcoModificarContacto.setLocationRelativeTo(null);
         marcoModificarContacto.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        marcoModificarContacto.setResizable(false);
        
     try
       { 
@@ -1304,28 +1314,5 @@ public class Ventanas extends JFrame
         //marcoModificarContacto.setAlwaysOnTop(true);
         marcoModificarContacto.setVisible(true);
     }
-  
-  /**
-   * Pasándole el id del usuario, se obtiene el campo correo
-   * 
-   * @param identificador
-   * @return 
-   */
-  public String obtenerCorreoUsuario(String identificador)
-  {
-      String campos[]={"email"};
-      try
-      {
-          ResultSet rs=bd.consulta("select", "datosusuario", campos, null, "where `idusuario`="+identificador+";", null);
-          String cor=rs.getString(1);
-          return cor;
-          
-      }catch(Exception ex)
-      {
-          JOptionPane.showMessageDialog(null, "Se produjo un error", "Error", JOptionPane.ERROR_MESSAGE);
-          System.out.println("error: "+ex.getMessage());
-      }
-      return null;
-  }
 
 }
