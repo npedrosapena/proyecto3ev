@@ -14,6 +14,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -225,4 +226,27 @@ public class Agenda
       
         return true;
     }
+    
+    /**
+   * Pasándole el id del usuario, se obtiene el campo correo
+   * 
+   * @param identificador
+   * @return 
+   */
+  public String obtenerCorreoUsuario(String identificador)
+  {
+      String campos[]={"email"};
+      try
+      {
+          ResultSet rs=bd.consulta("select", "datosusuario", campos, null, "where `idusuario`='"+identificador+"'", null);
+          String cor=rs.getString(1);
+          return cor;
+          
+      }catch(Exception ex)
+      {
+          JOptionPane.showMessageDialog(null, "Se produjo un error", "Error", JOptionPane.ERROR_MESSAGE);
+          System.out.println("error: "+ex.getMessage());
+      }
+      return null;
+  }
 }
