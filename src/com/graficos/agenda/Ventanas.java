@@ -37,10 +37,10 @@ public class Ventanas extends JFrame
     BaseDatos bd= new BaseDatos();
     DefaultTableModel modelo;
     public String identificador;
-    //String correoReceptor;
     
     final JTable tablaDatos= new JTable();
     
+    //contructor
     public Ventanas(){}
     
     /**
@@ -149,15 +149,7 @@ public class Ventanas extends JFrame
                         String id=rs.getString("id");//pregunto si el resultset tiene esta columna
                                                      //en caso de que no la tenga, salta una excepción
                         identificador=id;
-
-                        /*
-                        recogida del valor, ID del usuario para poder usar en la ventana de contactos etc...
-                        aprobechando que tenemos una consulta hecha, para pasar este valor (id) e ir jugando con
-                        el por el programa
-                        */
-                        
-                        //JOptionPane.showMessageDialog(null, "Estas dentro","dentron", JOptionPane.INFORMATION_MESSAGE);
-                        
+ 
                         marcoLogin.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                         marcoLogin.hide();
                         ventanaAgendaUsuario(id);
@@ -328,26 +320,26 @@ public class Ventanas extends JFrame
                         
                     }
 
-                @Override
-                public void keyPressed(KeyEvent ke)
-                {
-                    
-                }
+                    @Override
+                    public void keyPressed(KeyEvent ke)
+                    {
 
-                @Override
-                public void keyReleased(KeyEvent ke)
-                {
-                    
-                    try
-                    {
-                        Integer.parseInt(txtTelefono.getText());
-                    }catch(Exception ex)
-                    {
-                        JOptionPane.showMessageDialog(null, "Número no válido","Error",JOptionPane.ERROR_MESSAGE);
-                        txtTelefono.setText(null);
-                        txtTelefono.requestFocus();
                     }
-                }
+
+                    @Override
+                    public void keyReleased(KeyEvent ke)
+                    {
+
+                        try
+                        {
+                            Integer.parseInt(txtTelefono.getText());
+                        }catch(Exception ex)
+                        {
+                            JOptionPane.showMessageDialog(null, "Número no válido","Error",JOptionPane.ERROR_MESSAGE);
+                            txtTelefono.setText(null);
+                            txtTelefono.requestFocus();
+                        }
+                    }
                 });
         marcoCrearUsuario.add(txtTelefono);
         
@@ -666,7 +658,6 @@ public class Ventanas extends JFrame
         camposBusqueda.setBounds(530, 400, 80, 20);
         ventanaAgendaUsuario.add(camposBusqueda);
         
-        //txtTextoBuscar= new JTextField();
         txtTextoBuscar.setBounds(410, 400, 110, 20);
         txtTextoBuscar.addKeyListener(
                 new KeyListener()
@@ -914,44 +905,44 @@ public class Ventanas extends JFrame
                         
                     }
 
-                @Override
-                public void keyPressed(KeyEvent ke)
-                {
-                    
-                }
+                    @Override
+                    public void keyPressed(KeyEvent ke)
+                    {
 
-                @Override
-                public void keyReleased(KeyEvent ke)
-                {
-                    if(
-                        (txtApellido.getText().length()>0)&&
-                        (txtDireccion.getText().length()>0)&&
-                        (txtEmail.getText().length()>0)&&
-                        (txtNacionalidad.getText().length()>0)&&
-                        (txtNombreUsuario.getText().length()>0)&&
-                        (txtPoblacion.getText().length()>0)&&
-                        (txtProvincia.getText().length()>0)&&  
-                        (txtTelefono.getText().length()>0)
-                      )
-                        {
-                            btnCrearContacto.setEnabled(true);
-                        }else
-                        {
-                            btnCrearContacto.setEnabled(false);
-                        }
-                    try
-                    {
-                        Integer.parseInt(txtTelefono.getText());
-                        btnCrearContacto.setEnabled(true);
-                    }catch(Exception ex)
-                    {
-                        JOptionPane.showMessageDialog(null, "Número no válido","Error",JOptionPane.ERROR_MESSAGE);
-                        btnCrearContacto.setEnabled(false);
-                        txtTelefono.setText(null);
-                        txtTelefono.requestFocus();
                     }
-                }
-                });
+
+                    @Override
+                    public void keyReleased(KeyEvent ke)
+                    {
+                        if(
+                            (txtApellido.getText().length()>0)&&
+                            (txtDireccion.getText().length()>0)&&
+                            (txtEmail.getText().length()>0)&&
+                            (txtNacionalidad.getText().length()>0)&&
+                            (txtNombreUsuario.getText().length()>0)&&
+                            (txtPoblacion.getText().length()>0)&&
+                            (txtProvincia.getText().length()>0)&&  
+                            (txtTelefono.getText().length()>0)
+                          )
+                            {
+                                btnCrearContacto.setEnabled(true);
+                            }else
+                            {
+                                btnCrearContacto.setEnabled(false);
+                            }
+                        try
+                        {
+                            Integer.parseInt(txtTelefono.getText());
+                            btnCrearContacto.setEnabled(true);
+                        }catch(Exception ex)
+                        {
+                            JOptionPane.showMessageDialog(null, "Número no válido","Error",JOptionPane.ERROR_MESSAGE);
+                            btnCrearContacto.setEnabled(false);
+                            txtTelefono.setText(null);
+                            txtTelefono.requestFocus();
+                        }
+                    }
+                    });
         
         marcoCrearContacto.add(txtTelefono);
         
